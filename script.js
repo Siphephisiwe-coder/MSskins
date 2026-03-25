@@ -9,6 +9,26 @@
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
 
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navbar.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+      navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+    // Close mobile nav when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (navbar.classList.contains('open')) {
+          navbar.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.setAttribute('aria-label', 'Open menu');
+        }
+      });
+    });
+  }
+
   function initReveal() {
     const els = document.querySelectorAll('.page.active .reveal, .page.active .reveal-left, .page.active .reveal-right');
     const obs = new IntersectionObserver(entries => {

@@ -85,6 +85,17 @@ nav.scrolled .nav-links a { color: var(--mid); }
 .nav-cta { font-size: .7rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--dark); background: var(--beige-light); padding: .6rem 1.4rem; border-radius: 2rem; text-decoration: none; transition: background .3s, transform .2s; }
 .nav-cta:hover { background: var(--beige); transform: translateY(-1px); }
 
+/* Mobile CTA: hidden by default on large screens; shown only inside mobile menu when open */
+.nav-cta-mobile { display: none; }
+
+/* Mobile nav toggle */
+.nav-toggle { display: none; background: transparent; border: 0; cursor: pointer; width: 44px; height: 44px; align-items: center; justify-content: center; padding: 0; }
+.nav-toggle .icon { width: 22px; height: 22px; color: var(--white); display: block; }
+.nav-toggle .icon path { stroke: currentColor; }
+/* Ensure close icon is hidden by default and hamburger visible */
+.nav-toggle .icon-close { display: none !important; }
+.nav-toggle .icon-hamburger { display: block !important; }
+
 /* ── HERO ─────────────────────────────────────────────── */
 .hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; overflow: hidden; }
 .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform 8s ease; }
@@ -218,7 +229,8 @@ nav.scrolled .nav-links a { color: var(--mid); }
 .cta-sub { font-size: .9rem; font-weight: 300; color: var(--mid); margin-bottom: 2.5rem; }
 
 /* ── FOOTER ───────────────────────────────────────────── */
-footer { background: var(--dark); padding: 3.5rem 4rem; }
+/* subtle divider between page content and footer on dark backgrounds */
+footer { background: var(--dark); padding: 3.5rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); }
 .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 2rem; }
 .footer-logo-img { height: 70px; width: auto; filter: brightness(0) invert(1); }
 .footer-brand p { font-size: .85rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,.4); margin-top: .8rem; max-width: 260px; }
@@ -234,6 +246,10 @@ footer { background: var(--dark); padding: 3.5rem 4rem; }
 @media (max-width: 900px) {
   nav { padding: 0 1.5rem; }
   .nav-links { display: none; }
+  .nav-toggle { display: inline-flex; }
+  .nav-cta { display: none; }
+  /* Hide the duplicated mobile CTA by default (desktop uses .nav-cta) */
+  .nav-cta-mobile { display: none; }
   .hero-content { padding: 0 1.5rem; }
   .section { padding: 4rem 1.5rem; }
   .brand-strip { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
@@ -245,6 +261,19 @@ footer { background: var(--dark); padding: 3.5rem 4rem; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   footer { padding: 3rem 1.5rem; }
   .nav-logo-img { transform: scale(1.4); } /* slightly less scale on mobile */
+  /* When nav is open show vertical menu */
+  /* Mobile menu: translucent black overlay, white links with brand hover */
+  nav.open { background: rgba(0,0,0,0.16); }
+  nav.open .nav-links { display: flex; position: absolute; top: 75px; left: 0; right: 0; background: rgba(0,0,0,0.6); flex-direction: column; gap: 0; padding: 0.5rem 1.5rem; z-index: 110; }
+  nav.open .nav-links li { padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  nav.open .nav-links a { color: var(--white); font-size: .95rem; transition: color .18s; }
+  nav.open .nav-links a:hover { color: var(--beige); }
+  /* Show and style the mobile CTA inside the open menu */
+  nav.open .nav-links .nav-cta-mobile { display: block; padding: .9rem 0; border-bottom: none; }
+  nav.open .nav-links .nav-cta-mobile a { display: block; width: 100%; text-align: center; background: var(--beige); color: var(--dark); padding: .8rem 1rem; border-radius: 8px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  nav.open .nav-links .nav-cta-mobile a:hover { background: #b88b5e; color: var(--dark); }
+  nav.open .nav-toggle .icon-hamburger { display: none !important; }
+  nav.open .nav-toggle .icon-close { display: block !important; }
 }
 @media (max-width: 600px) {
   .footer-top { grid-template-columns: 1fr; }
